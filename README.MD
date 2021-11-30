@@ -16,7 +16,7 @@ run `pip3 install -r resources/requirements.txt`.
 
 1. Run `python3 -m uvicorn main:app --reload`
 
-2. The API will run on localhost:8000. To get a random moose picture,
-go to localhost:8000/moose/random. To get a specific moose picture,
+2. The API will run on localhost:8000. To get a random Moose picture,
+go to localhost:8000/moose/random. To get a specific Moose picture
 based on ID, go to localhost:8000/moose/ID, where ID is the ID of the
-mosoe picture you want to see.
+Moose picture you want to see.
