@@ -10,7 +10,7 @@ serves Moose pictures, but in a different context.
 1. Download the repository.
 
 2. Download [Python 3](https://python.org/downloads), and then
-run `pip3 install -r resources/requirements.txt`.
+run `pip3 install -r requirements.txt`.
 
 ## Running the API
 
