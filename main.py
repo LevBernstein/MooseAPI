@@ -10,7 +10,7 @@ from fastapi.responses import PlainTextResponse
 
 app = FastAPI()
 
-BASEURL = "https://{}.com/LevBernstein/BeardlessBot/{}/resources/images/{}"
+BASEURL = "https://{}.com/LevBernstein/moosePictures/"
 
 
 def meeseFinder(meese: list):
@@ -31,22 +31,19 @@ async def root():
 
 @app.get("/moose/random")
 async def random_moose_picture():
-	r = requests.get(BASEURL.format("github", "tree/main", "moose"))
+	r = requests.get(BASEURL.format("github"))
 	soup = BeautifulSoup(r.content.decode("utf-8", "html.parser"))
 	meese = meeseFinder(soup.stripped_strings)
-	url = BASEURL.format(
-		"raw.githubusercontent",
-		"main",
-		f"moose/moose{randint(1, max(meese))}.jpg"
+	url = (
+		BASEURL.format("raw.githubusercontent")
+		+ f"main/moose{randint(1, max(meese))}.jpg"
 	)
 	return {"Random Moose Picture": url}
 
 
 @app.get("/moose/{mooseID}")
 async def moose_picture_from_ID(mooseID: int):
-	url = BASEURL.format(
-		"raw.githubusercontent", "main", f"moose/moose{mooseID}.jpg"
-	)
+	url = BASEURL.format("raw.githubusercontent") + f"main/moose{mooseID}.jpg"
 	r = requests.get(url)
 	if r.status_code == 404:
 		raise RequestValidationError(400)
