@@ -32,7 +32,7 @@ async def root():
 @app.get("/moose/random")
 async def random_moose_picture():
 	r = requests.get(BASEURL.format("github"))
-	soup = BeautifulSoup(r.content.decode("utf-8", "html.parser"))
+	soup = BeautifulSoup(r.content.decode("utf-8"), "html.parser")
 	meese = meeseFinder(soup.stripped_strings)
 	url = (
 		BASEURL.format("raw.githubusercontent")
