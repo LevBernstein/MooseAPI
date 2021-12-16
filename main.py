@@ -1,6 +1,6 @@
 # Moose API
 
-from random import randint
+from random import choice
 
 import requests
 from bs4 import BeautifulSoup
@@ -11,13 +11,6 @@ from fastapi.responses import PlainTextResponse
 app = FastAPI()
 
 BASEURL = "https://{}.com/LevBernstein/moosePictures/"
-
-
-def meeseFinder(meese: list):
-	for moose in meese:
-		if moose.startswith("moose") and moose.endswith(".jpg"):
-			yield int(moose[5:-4])
-
 
 @app.exception_handler(RequestValidationError)
 async def validation_error_handler(*args):
@@ -31,15 +24,16 @@ async def root():
 
 @app.get("/moose/random")
 async def random_moose_picture():
-	r = requests.get(BASEURL.format("github"))
+	r = requests.get("https://github.com/LevBernstein/moosePictures/")
 	soup = BeautifulSoup(r.content.decode("utf-8"), "html.parser")
-	meese = meeseFinder(soup.stripped_strings)
-	url = (
-		BASEURL.format("raw.githubusercontent")
-		+ f"main/moose{randint(1, max(meese))}.jpg"
+	moose = choice(
+		tuple(
+			m for m in soup.stripped_strings
+			if m.startswith("moose") and m.endswith(".jpg")
+		)
 	)
+	url = BASEURL.format("raw.githubusercontent") + "main/" + moose
 	return {"Random Moose Picture": url}
-
 
 @app.get("/moose/{mooseID}")
 async def moose_picture_from_ID(mooseID: int):
