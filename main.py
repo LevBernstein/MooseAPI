@@ -24,7 +24,7 @@ async def root():
 
 @app.get("/moose/random")
 async def random_moose_picture():
-	r = requests.get("https://github.com/LevBernstein/moosePictures/")
+	r = requests.get(BASEURL.format("github"))
 	soup = BeautifulSoup(r.content.decode("utf-8"), "html.parser")
 	moose = choice(
 		tuple(
